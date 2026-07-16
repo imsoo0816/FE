@@ -32,13 +32,25 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-  color: #000;
-  font-family: Pretendard;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: -0.4px;
+  gap: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  div {
+    color: #000;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.4px;
+  }
 `;
 
 export const Chat = styled.div`
@@ -77,14 +89,9 @@ export const Alarm = styled.div`
 `;
 
 export const Category = styled.div`
-  position: fixed;
-  top: 137px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 393px;
   height: 65px;
   padding: 18px 25px;
-  z-index: 999;
 `;
 
 export const CList = styled.div`
@@ -116,132 +123,6 @@ export const LBtn = styled.div`
 export const Plus = styled.div`
   width: 24px;
   height: 24px;
-`;
-
-export const Body = styled.div`
-  padding-top: 202px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 13px 25px;
-`;
-
-export const Component = styled.div`
-  width: 343px;
-  height: 126px;
-  border-radius: 10px;
-  border: 1px solid #ffe49a;
-  background: #fffcf4;
-  padding: 22px 18px 20px 12px;
-  display: flex;
-  flex-direction: row;
-  gap: 13px;
-`;
-
-export const Img = styled.div`
-  width: 35px;
-  height: 35px;
-  background: #d9d9d9;
-  border-radius: 50%;
-`;
-
-export const Content = styled.div`
-  width: 265px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const Text = styled.div`
-  gap: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-`;
-
-export const Up = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-
-  #title {
-    color: #21272a;
-    font-family: Pretendard;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 110%; /* 16.5px */
-  }
-
-  #members {
-    color: #21272a;
-    font-family: Pretendard;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 110%; /* 16.5px */
-  }
-`;
-
-export const Down = styled.div`
-  color: #697077;
-  font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 16.8px */
-`;
-
-export const Button = styled.div`
-  width: 265px;
-  height: 33px;
-  border-radius: 10px;
-  background: #fff0c7;
-  color: #000;
-  font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%; /* 16.8px */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Make = styled.div`
-  width: 343px;
-  height: 42px;
-  border-radius: 10px;
-  border: 1px solid #ffe49a;
-  background: #ffe49a;
-  margin-top: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 15px;
-    height: 15px;
-  }
-
-  div {
-    color: #000;
-    font-family: Pretendard;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 140%; /* 21px */
-  }
 `;
 
 export const Nav = styled.div`
