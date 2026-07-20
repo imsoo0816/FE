@@ -62,11 +62,7 @@ const formatTimeAgo = (createdAt) => {
 
 const Chat = () => {
   const navigate = useNavigate();
-  const goHome = () => navigate(`/home`);
-  const goList = () => navigate(`/chat`);
-  const goMyroom = () => navigate(`/my`);
   const goBack = () => navigate(-1);
-  const goProf = () => navigate(`/profile`);
 
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
