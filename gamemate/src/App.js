@@ -17,7 +17,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Prof />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/chatroom" element={<Chatroom />} />
+        <Route path="/chatroom/:roomId" element={<Chatroom />} />
         <Route path="/make" element={<Make />} />
         <Route path="/" element={<SignupLogin />} />
         <Route path="/profile/update" element={<ProfileUpdate />} />

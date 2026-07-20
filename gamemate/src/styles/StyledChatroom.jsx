@@ -108,7 +108,7 @@ export const Body = styled.div`
   flex: 1;
   min-height: 0;
 
-  padding-top: 137px;
+  padding-top: 154px;
   padding-bottom: 20px;
 
   display: flex;
@@ -121,7 +121,7 @@ export const Body = styled.div`
 export const Board = styled.div`
   width: 343px;
 
-  height: calc(100dvh - 157px);
+  height: calc(100dvh - 174px);
   min-height: 400px;
   max-height: 690px;
 
