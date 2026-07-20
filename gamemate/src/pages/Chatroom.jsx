@@ -179,6 +179,7 @@ const Chatroom = () => {
 
       <C.Body>
         <C.Board>
+          {errorMessage && <div role="alert">{errorMessage}</div>}
           <C.Content>
             <C.Alert>
               <div>채팅방에 입장했습니다.</div>
