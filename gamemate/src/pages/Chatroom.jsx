@@ -7,11 +7,7 @@ import { getMyRooms } from "../api/ChatRoomApi";
 
 const Chatroom = () => {
   const navigate = useNavigate();
-  const goHome = () => navigate(`/`);
-  const goList = () => navigate(`/chat`);
-  const goMyroom = () => navigate(`/my`);
   const goBack = () => navigate(-1);
-  const goProf = () => navigate(`/profile`);
 
   const { roomId } = useParams();
 
