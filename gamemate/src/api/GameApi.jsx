@@ -1,4 +1,4 @@
-const GAMES_URL = "/api/games/";
+const GAMES_URL = "https://api.gamemate.kr/api/games/";
 
 const parseErrorMessage = async (response) => {
   try {

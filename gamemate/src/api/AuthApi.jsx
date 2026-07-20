@@ -1,4 +1,4 @@
-const AUTH_MVP_URL = "/api/auth/mvp/";
+const AUTH_MVP_URL = "https://api.gamemate.kr/api/auth/mvp/";
 
 const parseErrorMessage = async (response) => {
   try {
