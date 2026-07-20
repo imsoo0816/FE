@@ -1,4 +1,4 @@
-const ROOMS_URL = "/api/rooms/";
+const ROOMS_URL = "https://api.gamemate.kr/api/rooms/";
 
 const getAccessToken = () => {
   const accessToken = localStorage.getItem("accessToken");

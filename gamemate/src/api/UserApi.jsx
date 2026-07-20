@@ -1,4 +1,4 @@
-const AUTH_URL = "/api/auth/";
+const AUTH_URL = "https://api.gamemate.kr/api/auth/";
 
 const parseErrorMessage = async (
   response,
