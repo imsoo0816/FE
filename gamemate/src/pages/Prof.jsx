@@ -16,6 +16,8 @@ const Prof = () => {
   const navigate = useNavigate();
   const goList = () => navigate(`/chat`);
   const goProfileUpdate = () => navigate(`/profile/update`);
+  const goDetail = (room) =>
+    navigate(`/roomdetail/${room.id}`, { state: { roomId: room.id } });
   const [selected, setSelected] = useState("참여중");
   const [rooms, setRooms] = useState([]);
   const [message, setMessage] = useState("");
@@ -118,7 +120,9 @@ const Prof = () => {
                     </P.Down>
                   </P.Text>
                   <P.Button>
-                    <P.ButtonLeft>공유하기</P.ButtonLeft>
+                    <P.ButtonLeft onClick={() => goDetail(room)}>
+                      공유하기
+                    </P.ButtonLeft>
                     <P.ButtonRight>{isOwner ? "모집종료" : "나가기"}</P.ButtonRight>
                   </P.Button>
                 </P.Content>

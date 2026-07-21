@@ -8,6 +8,8 @@ import Chatroom from "./pages/Chatroom";
 import Make from "./pages/Make";
 import SignupLogin from "./pages/SignupLogin";
 import ProfileUpdate from "./pages/ProfileUpdate";
+import RoomDetail from "./pages/RoomDetail";
+
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/chatroom/:roomId" element={<Chatroom />} />
         <Route path="/make" element={<Make />} />
+        <Route path="/roomdetail" element={<RoomDetail />} />
+        <Route path="/roomdetail/:roomId" element={<RoomDetail />} />
         <Route path="/" element={<SignupLogin />} />
         <Route path="/profile/update" element={<ProfileUpdate />} />
       </Routes>

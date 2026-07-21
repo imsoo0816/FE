@@ -9,6 +9,8 @@ import * as H from "../styles/StyledHome";
 const Home = () => {
   const navigate = useNavigate();
   const goList = () => navigate(`/chat`);
+  const goRoomDetail = (room) =>
+    navigate(`/roomdetail/${room.id}`, { state: { roomId: room.id } });
   const [selected, setSelected] = useState("all");
   const [games, setGames] = useState([]);
   const [rooms, setRooms] = useState([]);
@@ -162,7 +164,7 @@ const Home = () => {
           {message && <H.Message>{message}</H.Message>}
 
           {rooms.map((room) => (
-            <H.Component key={room.id}>
+            <H.Component key={room.id} onClick={() => goRoomDetail(room)}>
               <H.Img style={{ background: room.game?.color || "#d9d9d9" }} />
               <H.Content>
                 <H.Text>
