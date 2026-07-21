@@ -26,6 +26,8 @@ const SignupLogin = () => {
     }
   };
 
+  console.log(process.env.REACT_APP_API_BASE_URL);
+
   return (
     <S.Container>
       <S.Header>
