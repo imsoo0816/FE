@@ -164,6 +164,12 @@ const Chatroom = () => {
     }
   };
 
+  const handleDiscordClick = () => {
+    if (!room?.discord_invite_url) return;
+
+    window.open(room.discord_invite_url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <C.Container>
       <C.Header>
@@ -180,13 +186,15 @@ const Chatroom = () => {
             <div id="members">참여 {room?.approved_member_count ?? 0}명</div>
           </C.CTitle>
         </C.Title>
-        <C.NBtn>
-          <img
-            id="discord"
-            src={`${process.env.PUBLIC_URL}/images/discord.svg`}
-            alt="discord"
-          />
-        </C.NBtn>
+        {room?.discord_invite_url?.trim() && (
+          <C.NBtn onClick={handleDiscordClick}>
+            <img
+              id="discord"
+              src={`${process.env.PUBLIC_URL}/images/discord.svg`}
+              alt="discord"
+            />
+          </C.NBtn>
+        )}
       </C.Header>
 
       <C.Body>

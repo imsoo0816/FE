@@ -29,7 +29,9 @@ const Prof = () => {
         const roomList = await getMyRooms();
         setRooms(roomList);
       } catch (error) {
-        setMessage(error.message || "내 방 목록을 불러오는 중 문제가 발생했습니다.");
+        setMessage(
+          error.message || "내 방 목록을 불러오는 중 문제가 발생했습니다.",
+        );
       }
     };
 
@@ -48,6 +50,12 @@ const Prof = () => {
 
   const visibleRooms = selected === "참여중" ? openRooms : closedRooms;
 
+  const totalUnreadCount = useMemo(
+    () =>
+      rooms.reduce((total, room) => total + Number(room.unread_count || 0), 0),
+    [rooms],
+  );
+
   return (
     <P.Container>
       <P.Header>
@@ -63,10 +71,16 @@ const Prof = () => {
               alt="edit"
             />
           </P.Img>
-          <P.Name onClick={goProfileUpdate}>{user?.nickname || "프로필"}</P.Name>
+          <P.Name onClick={goProfileUpdate}>
+            {user?.nickname || "프로필"}
+          </P.Name>
         </P.Profile>
         <P.Chat>
-          <P.Alarm>2</P.Alarm>
+          {totalUnreadCount > 0 && (
+            <P.Alarm>
+              {totalUnreadCount > 99 ? "99+" : totalUnreadCount}
+            </P.Alarm>
+          )}
           <P.NBtn onClick={goList}>
             <img
               id="chat"
@@ -123,7 +137,9 @@ const Prof = () => {
                     <P.ButtonLeft onClick={() => goDetail(room)}>
                       공유하기
                     </P.ButtonLeft>
-                    <P.ButtonRight>{isOwner ? "모집종료" : "나가기"}</P.ButtonRight>
+                    <P.ButtonRight>
+                      {isOwner ? "모집종료" : "나가기"}
+                    </P.ButtonRight>
                   </P.Button>
                 </P.Content>
               </P.Component>
