@@ -45,12 +45,24 @@ const Chatroom = () => {
           getMyRooms(),
         ]);
 
+        // console.log("===== messageData =====");
+        // console.log(messageData);
+        // console.log(JSON.stringify(messageData, null, 2));
+
         if (!isMounted) {
           return;
         }
 
         const currentRoom = myRooms.find(
           (item) => String(item.id) === String(roomId),
+        );
+
+        console.log("roomId:", roomId);
+        console.log("myRooms:", myRooms);
+        console.log("currentRoom:", currentRoom);
+        console.log(
+          "approved_member_count:",
+          currentRoom?.approved_member_count,
         );
 
         if (!currentRoom) {
@@ -181,12 +193,15 @@ const Chatroom = () => {
         <C.Board>
           {errorMessage && <div role="alert">{errorMessage}</div>}
           <C.Content>
-            <C.Alert>
-              <div>채팅방에 입장했습니다.</div>
-            </C.Alert>
-
             {!isLoading &&
               messages.map((item, index) => {
+                if (item.message_type === "system") {
+                  return (
+                    <C.Alert key={item.id}>
+                      <div>{item.content}</div>
+                    </C.Alert>
+                  );
+                }
                 const previousMessage = messages[index - 1];
 
                 const isSameSender =
@@ -208,19 +223,20 @@ const Chatroom = () => {
 
                 return (
                   <C.Opp key={item.id} $isSameSender={isSameSender}>
-                    {!isSameSender && <C.Prof />}
-
-                    <C.OMs>
+                    <C.Prof $isVisible={!isSameSender} />
+                    <C.Right>
                       {!isSameSender && (
-                        <span>
+                        <span id="name">
                           {item.sender?.nickname ||
                             item.sender?.username ||
                             "사용자"}
                         </span>
                       )}
 
-                      <div>{item.content}</div>
-                    </C.OMs>
+                      <C.OMs>
+                        <div>{item.content}</div>
+                      </C.OMs>
+                    </C.Right>
                   </C.Opp>
                 );
               })}

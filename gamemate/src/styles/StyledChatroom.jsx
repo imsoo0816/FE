@@ -191,6 +191,20 @@ export const Opp = styled.div`
   gap: 10px;
 
   margin-top: ${({ $isSameSender }) => ($isSameSender ? "8px" : "26px")};
+
+  span {
+    color: #000;
+    font-family: Pretendard;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+`;
+
+export const Right = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: start;
 `;
 
 export const Prof = styled.div`
@@ -198,6 +212,7 @@ export const Prof = styled.div`
   height: 40px;
   background: #d9d9d9;
   border-radius: 50%;
+  visibility: ${({ $isVisible }) => ($isVisible ? "visible" : "hidden")};
 `;
 
 export const OMs = styled.div`
