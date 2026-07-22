@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -14,10 +16,10 @@ const parseErrorMessage = async (response) => {
       errorData?.message ||
       errorData?.detail ||
       errorData?.error ||
-      "방 생성 중 문제가 발생했습니다."
+      "방을 생성하는 중 문제가 발생했습니다."
     );
   } catch {
-    return "방 생성 중 문제가 발생했습니다.";
+    return "방을 생성하는 중 문제가 발생했습니다.";
   }
 };
 
@@ -41,7 +43,7 @@ export const createRoom = async ({
   }
 
   if (!trimmedDescription) {
-    throw new Error("방 소개를 입력해주세요.");
+    throw new Error("방 설명을 입력해주세요.");
   }
 
   if (!game) {
@@ -49,7 +51,7 @@ export const createRoom = async ({
   }
 
   if (!playTimeSlot) {
-    throw new Error("시간대를 선택해주세요.");
+    throw new Error("시간을 선택해주세요.");
   }
 
   if (
@@ -60,18 +62,11 @@ export const createRoom = async ({
     throw new Error("모집 인원은 2명 이상 12명 이하로 선택해주세요.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(ROOMS_URL, {
+  const response = await authFetch(ROOMS_URL, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({
       title: trimmedTitle,

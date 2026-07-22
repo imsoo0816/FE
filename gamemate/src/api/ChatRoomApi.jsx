@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -8,7 +10,7 @@ const ROOMS_URL = `${API_BASE_URL}/api/rooms/`;
 
 const parseErrorMessage = async (
   response,
-  fallbackMessage = "요청을 처리하는 중 문제가 발생했습니다.",
+  fallbackMessage = "요청 처리 중 문제가 발생했습니다.",
 ) => {
   try {
     const errorData = await response.json();
@@ -25,21 +27,15 @@ const parseErrorMessage = async (
 };
 
 /**
- * 내가 참여 중인 방 목록 조회
+ * 내 방 목록 조회
  * GET https://api.gamemate.kr/api/rooms/mine/
  */
 export const getMyRooms = async () => {
-  const accessToken = localStorage.getItem("accessToken");
 
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(`${ROOMS_URL}mine/`, {
+  const response = await authFetch(`${ROOMS_URL}mine/`, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -62,18 +58,12 @@ export const getMyRooms = async () => {
 };
 
 /**
- * 특정 방 메시지 목록 조회
+ * 특정 채팅방의 메시지 목록 조회
  * GET https://api.gamemate.kr/api/rooms/{room_id}/messages/
  */
 export const getRoomMessages = async ({ roomId, afterId } = {}) => {
   if (roomId === undefined || roomId === null || roomId === "") {
-    throw new Error("roomId는 필수입니다.");
-  }
-
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
+    throw new Error("roomId는 필수 입력값입니다.");
   }
 
   const searchParams = new URLSearchParams();
@@ -88,11 +78,10 @@ export const getRoomMessages = async ({ roomId, afterId } = {}) => {
     `${ROOMS_URL}${encodeURIComponent(roomId)}/messages/` +
     (queryString ? `?${queryString}` : "");
 
-  const response = await fetch(requestUrl, {
+  const response = await authFetch(requestUrl, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -102,7 +91,7 @@ export const getRoomMessages = async ({ roomId, afterId } = {}) => {
     }
 
     if (response.status === 403) {
-      throw new Error("승인된 방 멤버만 메시지를 조회할 수 있습니다.");
+      throw new Error("해당 채팅방의 메시지를 조회할 권한이 없습니다.");
     }
 
     if (response.status === 404) {

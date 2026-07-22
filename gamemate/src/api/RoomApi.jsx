@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -21,7 +23,7 @@ const parseErrorMessage = async (response) => {
 };
 
 /**
- * 방 상세 조회
+ * 방 정보 조회
  * GET https://api.gamemate.kr/api/rooms/<roomId>/
  */
 export const getRoomDetail = async (roomId) => {
@@ -29,13 +31,10 @@ export const getRoomDetail = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  const response = await fetch(`${ROOMS_URL}${roomId}/`, {
+  const response = await authFetch(`${ROOMS_URL}${roomId}/`, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   });
 
@@ -63,13 +62,10 @@ export const getRoomMembers = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  const response = await fetch(`${ROOMS_URL}${roomId}/members/`, {
+  const response = await authFetch(`${ROOMS_URL}${roomId}/members/`, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   });
 
@@ -93,27 +89,20 @@ export const leaveRoom = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(`${ROOMS_URL}${roomId}/leave/`, {
+  const response = await authFetch(`${ROOMS_URL}${roomId}/leave/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
   if (!response.ok) {
     if (response.status === 401) {
-      throw new Error("로그인 정보가 만료되었습니다. 다시 로그인해주세요.");
+      throw new Error("로그인 정보가 만료되었습니다. 다시 로그인해 주세요.");
     }
 
     if (response.status === 403) {
-      throw new Error("이 방에서 나갈 권한이 없습니다.");
+      throw new Error("방에서 나갈 권한이 없습니다.");
     }
 
     if (response.status === 404) {
@@ -131,23 +120,16 @@ export const deleteRoom = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(`${ROOMS_URL}${roomId}/`, {
+  const response = await authFetch(`${ROOMS_URL}${roomId}/`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
   if (!response.ok) {
     if (response.status === 401) {
-      throw new Error("로그인 정보가 만료되었습니다. 다시 로그인해주세요.");
+      throw new Error("로그인 정보가 만료되었습니다. 다시 로그인해 주세요.");
     }
 
     if (response.status === 403) {

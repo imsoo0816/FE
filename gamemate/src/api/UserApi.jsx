@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -8,7 +10,7 @@ const AUTH_URL = `${API_BASE_URL}/api/auth/`;
 
 const parseErrorMessage = async (
   response,
-  fallbackMessage = "요청을 처리하는 중 문제가 발생했습니다.",
+  fallbackMessage = "요청 처리 중 문제가 발생했습니다.",
 ) => {
   try {
     const errorData = await response.json();
@@ -25,17 +27,11 @@ const parseErrorMessage = async (
 };
 
 export const getMyInfo = async () => {
-  const accessToken = localStorage.getItem("accessToken");
 
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(`${AUTH_URL}me/`, {
+  const response = await authFetch(`${AUTH_URL}me/`, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -49,7 +45,7 @@ export const getMyInfo = async () => {
     }
 
     throw new Error(
-      await parseErrorMessage(response, "사용자 정보를 불러오지 못했습니다."),
+      await parseErrorMessage(response, "사용자 정보를 불러오는 데 실패했습니다."),
     );
   }
 

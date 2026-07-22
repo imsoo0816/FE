@@ -1,4 +1,10 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
+
+if (!API_BASE_URL) {
+  throw new Error("REACT_APP_API_BASE_URL is not configured.");
+}
 
 const GAMES_URL = `${API_BASE_URL}/api/games/`;
 
@@ -22,12 +28,16 @@ const parseErrorMessage = async (response) => {
  * GET https://api.gamemate.kr/api/games/
  */
 export const getGames = async () => {
-  const response = await fetch(GAMES_URL, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+  const response = await authFetch(
+    GAMES_URL,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+    { requireAuth: false },
+  );
 
   if (!response.ok) {
     throw new Error(await parseErrorMessage(response));

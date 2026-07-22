@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -49,16 +51,13 @@ export const postRoomMessage = async ({ roomId, content } = {}) => {
     throw new Error("메시지는 1000자 이하로 입력해 주세요.");
   }
 
-  const accessToken = getAccessToken();
-
-  const response = await fetch(
+  const response = await authFetch(
     `${ROOMS_URL}${encodeURIComponent(roomId)}/messages/`,
     {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         content: trimmedContent,
@@ -98,7 +97,6 @@ export const getRoomMessages = async ({ roomId, afterId } = {}) => {
     throw new Error("roomId는 필수입니다.");
   }
 
-  const accessToken = getAccessToken();
   const searchParams = new URLSearchParams();
 
   if (afterId !== undefined && afterId !== null && afterId !== "") {
@@ -111,11 +109,10 @@ export const getRoomMessages = async ({ roomId, afterId } = {}) => {
     `${ROOMS_URL}${encodeURIComponent(roomId)}/messages/` +
     (queryString ? `?${queryString}` : "");
 
-  const response = await fetch(requestUrl, {
+  const response = await authFetch(requestUrl, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 
@@ -150,7 +147,7 @@ const createChatSocketUrl = (roomId) => {
     throw new Error("roomId는 필수입니다.");
   }
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = getAccessToken();
 
   if (!accessToken) {
     throw new Error("로그인이 필요합니다.");
