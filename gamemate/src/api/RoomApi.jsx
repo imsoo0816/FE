@@ -31,12 +31,16 @@ export const getRoomDetail = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const response = await authFetch(`${ROOMS_URL}${roomId}/`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+  const response = await authFetch(
+    `${ROOMS_URL}${roomId}/`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+    { requireAuth: false },
+  );
 
   if (!response.ok) {
     if (response.status === 401) {
@@ -62,12 +66,16 @@ export const getRoomMembers = async (roomId) => {
     throw new Error("방 정보를 찾을 수 없습니다.");
   }
 
-  const response = await authFetch(`${ROOMS_URL}${roomId}/members/`, {
-    method: "GET",
-    headers: {
-      Accept: "application/json",
+  const response = await authFetch(
+    `${ROOMS_URL}${roomId}/members/`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
     },
-  });
+    { requireAuth: false },
+  );
 
   if (!response.ok) {
     if (response.status === 401) {

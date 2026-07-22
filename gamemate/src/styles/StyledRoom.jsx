@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   margin-top: 0px;
-  min-height: 100dvh;
+  height: 100dvh;
   padding: 0; /* 불필요한 패딩 제거 */
   box-sizing: border-box; /* 패딩이 width에 포함되도록 설정 */
   display: flex;
@@ -13,12 +13,13 @@ export const Container = styled.div`
   width: 100%;
   max-width: 402px;
   flex-shrink: 0;
-  padding-bottom: 30px;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
   height: 137px;
-  width: 393px;
+  width: 100%;
+  max-width: 402px;
   padding: 64px 25px 32px 25px;
   display: flex;
   flex-direction: row;
@@ -29,6 +30,8 @@ export const Header = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+  box-sizing: border-box;
+  background: #fff0c7;
 `;
 
 export const Title = styled.div`
@@ -79,25 +82,28 @@ export const CTitle = styled.div`
 
 
 export const Body = styled.div`
-  flex: 1;
-  min-height: 0;
-
-  padding-top: 137px;
-  padding-bottom: 20px;
-
+  position: fixed;
+  top: 137px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 402px;
+  padding: 0 0 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 `;
 
 export const Board = styled.div`
   width: 343px;
 
-  height: calc(100dvh - 157px);
-  min-height: 400px;
-  max-height: 690px;
+  height: auto;
+  min-height: max(600px, calc(100dvh - 167px));
 
   border-radius: 30px;
   background: #fffcf4;
@@ -108,7 +114,7 @@ export const Board = styled.div`
   flex-direction: column;
 
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 `;
 
 export const ProfileImg = styled.div`
@@ -121,10 +127,12 @@ export const ProfileImg = styled.div`
 
 export const Content = styled.div`
   width: 100%;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 24px;
 `;
 export const Text = styled.div`
 gap: 6px;

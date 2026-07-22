@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as C from "../styles/StyledChat";
 import { getMyRooms, getRoomMessages } from "../api/ChatRoomApi";
+import { navigateBackOrHome } from "../utils/navigation";
 
 const getLatestMessage = (messages) => {
   if (!Array.isArray(messages) || messages.length === 0) {
@@ -62,7 +63,7 @@ const formatTimeAgo = (createdAt) => {
 
 const Chat = () => {
   const navigate = useNavigate();
-  const goBack = () => navigate(-1);
+  const goBack = () => navigateBackOrHome(navigate);
 
   const [rooms, setRooms] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getGames } from "../api/GameApi";
 import { createRoom } from "../api/MakeApi";
 import * as M from "../styles/StyledMake";
+import { navigateBackOrHome } from "../utils/navigation";
 
 const Make = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Make = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const goBack = () => navigate(-1);
+  const goBack = () => navigateBackOrHome(navigate);
 
   useEffect(() => {
     const loadGames = async () => {
@@ -88,7 +89,7 @@ const Make = () => {
             type="text"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            placeholder="예: 농사지으실분"
+            placeholder="예: 나랑 발로란트 할 사람 모이셈"
           />
         </M.TitleInput>
 
@@ -97,7 +98,7 @@ const Make = () => {
           <textarea
             value={description}
             onChange={(event) => setDescription(event.target.value)}
-            placeholder="예: 새벽에"
+            placeholder="티어, 시간대, 마이크 유무 등 자유롭게 작성해주세요"
           />
         </M.ContentInput>
 

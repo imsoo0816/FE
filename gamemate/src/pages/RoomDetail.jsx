@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { applyToRoom } from "../api/ApplyApi";
 import { getRoomDetail, getRoomMembers } from "../api/RoomApi";
 import * as R from "../styles/StyledRoom";
+import { navigateBackOrHome } from "../utils/navigation";
 
 const getCurrentUser = () => {
   try {
@@ -16,7 +17,7 @@ const RoomDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { roomId: routeRoomId } = useParams();
-  const goBack = () => navigate(-1);
+  const goBack = () => navigateBackOrHome(navigate);
   const [room, setRoom] = useState(null);
   const [members, setMembers] = useState([]);
   const [message, setMessage] = useState("");
@@ -82,13 +83,8 @@ const RoomDetail = () => {
   }, [roomId, location.state?.applied, hideMemberList]);
 
   const handleApply = async () => {
-    if (!localStorage.getItem("accessToken")) {
-      navigate("/", {
-        state: {
-          applyRoomId: roomId,
-          redirectTo: `/roomdetail/${roomId}`,
-        },
-      });
+    if (!getCurrentUser()) {
+      setMessage("로그인/회원가입 후 신청할 수 있어요.");
       return;
     }
 

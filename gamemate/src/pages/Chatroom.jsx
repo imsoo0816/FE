@@ -4,10 +4,11 @@ import * as C from "../styles/StyledChatroom";
 import { getRoomMessages, postRoomMessage } from "../api/ChatApi";
 import { getMyInfo } from "../api/UserApi";
 import { getMyRooms } from "../api/ChatRoomApi";
+import { navigateBackOrHome } from "../utils/navigation";
 
 const Chatroom = () => {
   const navigate = useNavigate();
-  const goBack = () => navigate(-1);
+  const goBack = () => navigateBackOrHome(navigate);
 
   const { roomId } = useParams();
 

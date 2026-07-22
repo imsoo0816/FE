@@ -309,6 +309,8 @@ letter-spacing: -0.3px;
 export const Button = styled.button`
 width: 343px;
   height: 55px;
+  min-height: 55px;
+  flex: 0 0 55px;
   border-radius: 10px;
   border: 1px solid #ffe49a;
   background: #ffe49a;

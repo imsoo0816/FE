@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as U from "../styles/StyledProfileUpdate";
+import { navigateBackOrHome } from "../utils/navigation";
 
 const getStoredUser = () => {
   try {
@@ -15,7 +16,7 @@ const ProfileUpdate = () => {
   const user = getStoredUser();
   const [nickname, setNickname] = useState(user?.nickname || "");
 
-  const goBack = () => navigate(-1);
+  const goBack = () => navigateBackOrHome(navigate);
 
   return (
     <U.Container>
