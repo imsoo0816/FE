@@ -1,3 +1,5 @@
+import { saveAuthData } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -17,20 +19,6 @@ const parseErrorMessage = async (response) => {
     );
   } catch {
     return "로그인 중 문제가 발생했습니다.";
-  }
-};
-
-const saveAuthData = (authData) => {
-  if (authData.access) {
-    localStorage.setItem("accessToken", authData.access);
-  }
-
-  if (authData.refresh) {
-    localStorage.setItem("refreshToken", authData.refresh);
-  }
-
-  if (authData.user) {
-    localStorage.setItem("user", JSON.stringify(authData.user));
   }
 };
 

@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -6,19 +8,9 @@ if (!API_BASE_URL) {
 
 const ROOMS_URL = `${API_BASE_URL}/api/rooms/`;
 
-const getAccessToken = () => {
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  return accessToken;
-};
-
 const parseErrorMessage = async (
   response,
-  fallbackMessage = "요청을 처리하는 중 문제가 발생했습니다.",
+  fallbackMessage = "요청 처리 중 문제가 발생했습니다.",
 ) => {
   try {
     const errorData = await response.json();
@@ -36,7 +28,7 @@ const parseErrorMessage = async (
 };
 
 /**
- * 방 가입 신청
+ * 방 참여 신청
  *
  * POST https://api.gamemate.kr/api/rooms/{id}/apply/
  *
@@ -61,15 +53,12 @@ export const applyToRoom = async ({ roomId } = {}) => {
     throw new Error("방 ID가 필요합니다.");
   }
 
-  const accessToken = getAccessToken();
-
-  const response = await fetch(
+  const response = await authFetch(
     `${ROOMS_URL}${encodeURIComponent(roomId)}/apply/`,
     {
       method: "POST",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${accessToken}`,
       },
     },
   );
@@ -77,7 +66,7 @@ export const applyToRoom = async ({ roomId } = {}) => {
   if (!response.ok) {
     if (response.status === 400) {
       throw new Error(
-        await parseErrorMessage(response, "가입 신청이 불가능한 방입니다."),
+        await parseErrorMessage(response, "방 참여 신청이 불가능한 방입니다."),
       );
     }
 
@@ -86,7 +75,7 @@ export const applyToRoom = async ({ roomId } = {}) => {
     }
 
     if (response.status === 403) {
-      throw new Error("이 방에 가입 신청할 권한이 없습니다.");
+      throw new Error("해당 방에 참여 신청할 권한이 없습니다.");
     }
 
     if (response.status === 404) {
@@ -94,7 +83,7 @@ export const applyToRoom = async ({ roomId } = {}) => {
     }
 
     throw new Error(
-      await parseErrorMessage(response, "가입 신청 중 문제가 발생했습니다."),
+      await parseErrorMessage(response, "방 참여 신청 중 문제가 발생했습니다."),
     );
   }
 

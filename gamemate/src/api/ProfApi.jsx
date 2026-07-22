@@ -1,7 +1,9 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
-  throw new Error("REACT_APP_API_BASE_URL 환경변수가 설정되지 않았습니다.");
+  throw new Error("REACT_APP_API_BASE_URL ?�경변?��? ?�정?��? ?�았?�니??");
 }
 
 const MY_ROOMS_URL = `${API_BASE_URL}/api/rooms/mine/`;
@@ -21,21 +23,15 @@ const parseErrorMessage = async (response) => {
 };
 
 /**
- * 내가 참여 중인 방 목록 조회
+ * 내 방 목록 조회
  * GET https://api.gamemate.kr/api/rooms/mine/
  */
 export const getMyRooms = async () => {
-  const accessToken = localStorage.getItem("accessToken");
 
-  if (!accessToken) {
-    throw new Error("로그인이 필요합니다.");
-  }
-
-  const response = await fetch(MY_ROOMS_URL, {
+  const response = await authFetch(MY_ROOMS_URL, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
     },
   });
 

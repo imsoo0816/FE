@@ -37,10 +37,33 @@ const copyText = async (text) => {
   textArea.setAttribute("readonly", "");
   textArea.style.position = "fixed";
   textArea.style.opacity = "0";
+  textArea.style.left = "-9999px";
   document.body.appendChild(textArea);
+  textArea.focus();
   textArea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textArea);
+  textArea.setSelectionRange(0, textArea.value.length);
+
+  try {
+    document.execCommand("copy");
+  } finally {
+    document.body.removeChild(textArea);
+  }
+};
+
+const shareRoom = async ({ title, text, url }) => {
+  if (navigator.share) {
+    try {
+      await navigator.share({ title, text, url });
+      return "shared";
+    } catch (error) {
+      if (error?.name === "AbortError") {
+        return "cancelled";
+      }
+    }
+  }
+
+  await copyText(url);
+  return "copied";
 };
 
 const Prof = () => {
@@ -106,7 +129,15 @@ const Prof = () => {
 
     try {
       const roomUrl = `${window.location.origin}/roomdetail/${room.id}`;
-      await copyText(roomUrl);
+      const shareResult = await shareRoom({
+        title: room.title || "GameMate",
+        text: room.description || "GameMate 방을 확인해보세요.",
+        url: roomUrl,
+      });
+
+      if (shareResult === "cancelled") {
+        return;
+      }
       setModal({
         type: "notice",
         title: "링크가 복사됐어요",

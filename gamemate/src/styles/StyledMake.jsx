@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   margin-top: 0px;
-  min-height: 100dvh;
+  height: 100dvh;
   padding: 0; /* 불필요한 패딩 제거 */
   box-sizing: border-box; /* 패딩이 width에 포함되도록 설정 */
   display: flex;
@@ -13,12 +13,13 @@ export const Container = styled.div`
   width: 100%;
   max-width: 402px;
   flex-shrink: 0;
-  padding-bottom: 30px;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
   height: 137px;
-  width: 393px;
+  width: 100%;
+  max-width: 402px;
   padding: 64px 25px 32px 25px;
   display: flex;
   flex-direction: row;
@@ -29,6 +30,8 @@ export const Header = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
+  box-sizing: border-box;
+  background: #fff0c7;
 `;
 
 export const Title = styled.div`
@@ -169,12 +172,22 @@ export const NBtn = styled.div`
 `;
 
 export const Body = styled.div`
-padding-top: 172px;
+  position: fixed;
+  top: 137px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 402px;
+  padding: 35px 0 40px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
   gap:20px;
     p{
     color: #000;

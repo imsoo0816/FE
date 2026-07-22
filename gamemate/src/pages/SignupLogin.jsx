@@ -34,7 +34,7 @@ const SignupLogin = () => {
       }
 
       setMessage(authData.message || "로그인되었습니다.");
-      navigate("/home");
+      navigate(location.state?.redirectTo || "/home", { replace: true });
     } catch (error) {
       setMessage(error.message || "로그인 중 문제가 발생했습니다.");
     } finally {

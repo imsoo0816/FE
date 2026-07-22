@@ -1,3 +1,5 @@
+import { authFetch } from "./ApiClient";
+
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
@@ -38,13 +40,17 @@ export const getRooms = async ({ game } = {}) => {
 
   const accessToken = localStorage.getItem("accessToken");
 
-  const response = await fetch(requestUrl, {
+  const response = await authFetch(
+    requestUrl,
+    {
     method: "GET",
     headers: {
       Accept: "application/json",
       ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
-  });
+    },
+    { requireAuth: false },
+  );
 
   if (!response.ok) {
     throw new Error(await parseErrorMessage(response));
