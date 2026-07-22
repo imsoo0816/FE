@@ -38,7 +38,16 @@ export const Title = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  letter-spacing: -0.4px;
+  letter-spacing: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+  }
 `;
 
 export const Chat = styled.div`
@@ -55,25 +64,26 @@ export const Chat = styled.div`
 export const Alarm = styled.div`
   position: absolute;
 
-  width: 17px;
-  height: 17px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   background: #f72323;
-  border-radius: 50%;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 
-  right: 7px;
-  bottom: 14px;
+  right: 4px;
+  bottom: 12px;
 
   color: #fff;
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  letter-spacing: -0.24px;
-  font-align: center;
+  letter-spacing: 0;
 `;
 
 export const Category = styled.div`

@@ -10,11 +10,13 @@ const SignupLogin = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("error");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage("");
+    setMessageType("error");
     setIsLoading(true);
 
     try {
@@ -33,10 +35,12 @@ const SignupLogin = () => {
         return;
       }
 
+      setMessageType("success");
       setMessage(authData.message || "로그인되었습니다.");
       navigate(location.state?.redirectTo || "/home", { replace: true });
     } catch (error) {
-      setMessage(error.message || "로그인 중 문제가 발생했습니다.");
+      setMessageType("error");
+      setMessage(error.message || "로그인 처리 중 문제가 발생했습니다.");
     } finally {
       setIsLoading(false);
     }
@@ -44,51 +48,64 @@ const SignupLogin = () => {
 
   return (
     <S.Container>
-      <S.Header>
-        <S.Title>
-          <div>로그인 / 회원가입</div>
-        </S.Title>
-      </S.Header>
-
       <S.Body as="form" onSubmit={handleSubmit}>
-        <S.Img>
+        <S.Brand>
           <img
-            id="person"
-            src={`${process.env.PUBLIC_URL}/images/person.svg`}
-            alt="person"
+            src={`${process.env.PUBLIC_URL}/images/logoImg.svg`}
+            alt="GAMEMATE logo"
           />
-        </S.Img>
+          <div>
+            <h1>GAMEMATE</h1>
+            <p>닉네임과 비밀번호만으로 바로 시작해요.</p>
+          </div>
+        </S.Brand>
 
-        <S.TitleInput>
-          <p>닉네임</p>
-          <input
-            type="text"
-            value={nickname}
-            onChange={(event) => setNickname(event.target.value)}
-            placeholder="닉네임을 입력해주세요."
-            autoComplete="username"
-          />
+        <S.Panel>
+          <S.PanelHeader>
+            <h2>로그인 / 회원가입</h2>
+            <p>처음 쓰는 닉네임이면 자동으로 가입됩니다.</p>
+          </S.PanelHeader>
 
-          <p>*닉네임은 대소문자를 구분하지 않고 고유해야 합니다.</p>
-          <p>비밀번호</p>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            placeholder="비밀번호를 입력해주세요."
-            autoComplete="current-password"
-          />
-        </S.TitleInput>
+          <S.FieldGroup>
+            <S.Field>
+              <label htmlFor="nickname">닉네임</label>
+              <input
+                id="nickname"
+                type="text"
+                value={nickname}
+                onChange={(event) => setNickname(event.target.value)}
+                placeholder="사용할 닉네임"
+                autoComplete="username"
+              />
+            </S.Field>
 
-        {message && (
-          <S.Message $isError={!message.includes("로그인")}>
-            {message}
-          </S.Message>
-        )}
+            <S.Field>
+              <label htmlFor="password">비밀번호</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="비밀번호"
+                autoComplete="current-password"
+              />
+            </S.Field>
+          </S.FieldGroup>
 
-        <S.Button type="submit" disabled={isLoading}>
-          {isLoading ? "처리 중..." : "로그인 / 회원가입"}
-        </S.Button>
+          <S.HelperText>
+            기존 닉네임은 같은 비밀번호로 로그인하고, 새 닉네임은 바로 가입돼요.
+          </S.HelperText>
+
+          {message && (
+            <S.Message $isError={messageType === "error"} role="alert">
+              {message}
+            </S.Message>
+          )}
+
+          <S.Button type="submit" disabled={isLoading}>
+            {isLoading ? "처리 중..." : "시작하기"}
+          </S.Button>
+        </S.Panel>
       </S.Body>
     </S.Container>
   );

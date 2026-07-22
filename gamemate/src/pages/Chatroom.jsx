@@ -4,6 +4,7 @@ import * as C from "../styles/StyledChatroom";
 import { getRoomMessages, postRoomMessage } from "../api/ChatApi";
 import { getMyInfo } from "../api/UserApi";
 import { getMyRooms } from "../api/ChatRoomApi";
+import { getProfileAvatarSrc } from "../utils/profileAvatar";
 import { navigateBackOrHome } from "../utils/navigation";
 
 const Chatroom = () => {
@@ -171,6 +172,16 @@ const Chatroom = () => {
     window.open(room.discord_invite_url, "_blank", "noopener,noreferrer");
   };
 
+  const goRoomDetail = () => {
+    if (!roomId) return;
+
+    navigate(`/roomdetail/${roomId}`, {
+      state: {
+        roomId,
+      },
+    });
+  };
+
   return (
     <C.Container>
       <C.Header>
@@ -181,7 +192,17 @@ const Chatroom = () => {
             alt="back"
             onClick={goBack}
           />
-          <C.CTitle>
+          <C.CTitle
+            role="button"
+            tabIndex={0}
+            onClick={goRoomDetail}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                goRoomDetail();
+              }
+            }}
+          >
             <div id="title">{room?.title || "채팅방"}</div>
 
             <div id="members">참여 {room?.approved_member_count ?? 0}명</div>
@@ -232,7 +253,12 @@ const Chatroom = () => {
 
                 return (
                   <C.Opp key={item.id} $isSameSender={isSameSender}>
-                    <C.Prof $isVisible={!isSameSender} />
+                    <C.Prof
+                      as="img"
+                      $isVisible={!isSameSender}
+                      src={getProfileAvatarSrc(item.sender?.profile_avatar)}
+                      alt=""
+                    />
                     <C.Right>
                       {!isSameSender && (
                         <span id="name">

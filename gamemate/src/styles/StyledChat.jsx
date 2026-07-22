@@ -126,6 +126,18 @@ export const Img = styled.div`
   height: 50px;
   background: #d9d9d9;
   border-radius: 50%;
+  flex: 0 0 auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 `;
 
 export const Text = styled.div`

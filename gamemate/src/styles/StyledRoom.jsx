@@ -40,16 +40,17 @@ export const Title = styled.div`
   flex-direction: row;
   align-items: center;
 
-  img {
+  #back{
     width: 24px;
-    height: 24px;
+    height: 24px; 
   }
 `;
 
 export const HeaderLogo = styled.div`
-  width: 45px;
-  height: 45px;
+  width: 64px;
+    height: 64px;
   border-radius: 10px;
+  object-fit: contain;
   flex: 0 0 auto;
 `;
 
@@ -118,8 +119,8 @@ export const Board = styled.div`
 `;
 
 export const ProfileImg = styled.div`
-  width: 46px;
-  height: 46px;
+  width: 54px;
+  height: 54px;
   background: #d9d9d9;
   border-radius: 50%;
   flex: 0 0 auto;
@@ -289,6 +290,7 @@ export const MemberAvatar = styled.div`
   background: #d9d9d9;
   box-sizing: border-box;
   flex: 0 0 48px;
+  object-fit: cover;
 `;
 export const Up = styled.div`
 display: flex;

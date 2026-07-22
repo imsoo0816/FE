@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { applyToRoom } from "../api/ApplyApi";
 import { getRoomDetail, getRoomMembers } from "../api/RoomApi";
 import * as R from "../styles/StyledRoom";
+import { getProfileAvatarSrc } from "../utils/profileAvatar";
 import { navigateBackOrHome } from "../utils/navigation";
 
 const getCurrentUser = () => {
@@ -137,7 +138,11 @@ const RoomDetail = () => {
             alt="back"
             onClick={goBack}
           />
-          <R.HeaderLogo style={{ background: room?.game?.color || "#d9d9d9" }} />
+          <R.HeaderLogo
+            as="img"
+            src={`${process.env.PUBLIC_URL}/images/logoImg.svg`}
+            alt="GAMEMATE logo"
+          />
           <R.CTitle>
             <div id="title">GAMEMATE</div>
           </R.CTitle>
@@ -178,7 +183,11 @@ const RoomDetail = () => {
                       <R.MemberList>
                         {approvedMembers.map((member) => (
                           <R.MemberItem key={member.id}>
-                            <R.MemberAvatar />
+                            <R.MemberAvatar
+                              as="img"
+                              src={getProfileAvatarSrc(member.user?.profile_avatar)}
+                              alt=""
+                            />
                             <div>
                               {member.user?.nickname ||
                                 member.user?.username ||

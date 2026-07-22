@@ -18,10 +18,10 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<SignupLogin />} />
-        <Route path="/roomdetail" element={<RoomDetail />} />
-        <Route path="/roomdetail/:roomId" element={<RoomDetail />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/roomdetail" element={<RoomDetail />} />
+          <Route path="/roomdetail/:roomId" element={<RoomDetail />} />
           <Route path="/profile" element={<Prof />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/chatroom/:roomId" element={<Chatroom />} />

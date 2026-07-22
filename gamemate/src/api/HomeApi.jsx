@@ -38,19 +38,12 @@ export const getRooms = async ({ game } = {}) => {
     ? `${ROOMS_URL}?${searchParams.toString()}`
     : ROOMS_URL;
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  const response = await authFetch(
-    requestUrl,
-    {
+  const response = await authFetch(requestUrl, {
     method: "GET",
     headers: {
       Accept: "application/json",
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
-    },
-    { requireAuth: false },
-  );
+  });
 
   if (!response.ok) {
     throw new Error(await parseErrorMessage(response));

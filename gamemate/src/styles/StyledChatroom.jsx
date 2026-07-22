@@ -47,6 +47,8 @@ export const CTitle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
+  cursor: pointer;
 
   #title {
     color: #000;
@@ -208,10 +210,12 @@ export const Right = styled.div`
 `;
 
 export const Prof = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: #d9d9d9;
   border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
   visibility: ${({ $isVisible }) => ($isVisible ? "visible" : "hidden")};
 `;
 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { getGames } from "../api/GameApi";
 import { getRooms } from "../api/HomeApi";
+import { getMyRooms } from "../api/ChatRoomApi";
 import * as H from "../styles/StyledHome";
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
   const [games, setGames] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [message, setMessage] = useState("");
+  const [totalUnreadCount, setTotalUnreadCount] = useState(0);
   const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
   const [hasCategoryOverflow, setHasCategoryOverflow] = useState(false);
   const gameListRef = useRef(null);
@@ -33,6 +35,23 @@ const Home = () => {
     };
 
     loadGames();
+  }, []);
+
+  useEffect(() => {
+    const loadUnreadCount = async () => {
+      try {
+        const myRooms = await getMyRooms();
+        const unreadCount = (Array.isArray(myRooms) ? myRooms : []).reduce(
+          (total, room) => total + Number(room.unread_count || 0),
+          0,
+        );
+        setTotalUnreadCount(unreadCount);
+      } catch {
+        setTotalUnreadCount(0);
+      }
+    };
+
+    loadUnreadCount();
   }, []);
 
   useEffect(() => {
@@ -76,8 +95,19 @@ const Home = () => {
   return (
     <H.Container>
       <H.Header>
-        <H.Title>Game Mate 구하기</H.Title>
+        <H.Title>
+          <img
+            src={`${process.env.PUBLIC_URL}/images/logoImg.svg`}
+            alt="GAMEMATE logo"
+          />
+          <span>Game Mate 구하기</span>
+        </H.Title>
         <H.Chat>
+          {totalUnreadCount > 0 && (
+            <H.Alarm>
+              {totalUnreadCount > 99 ? "99+" : totalUnreadCount}
+            </H.Alarm>
+          )}
           <H.NBtn onClick={goList}>
             <img
               id="chat"

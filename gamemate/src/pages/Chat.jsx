@@ -202,7 +202,7 @@ const Chat = () => {
               return (
                 <C.Component key={room.id} onClick={() => goRoom(room.id)}>
                   <C.Content>
-                    <C.Img>
+                    <C.Img style={{ background: room.game?.color || "#d9d9d9" }}>
                       {room.game?.icon && (
                         <img
                           src={room.game.icon}

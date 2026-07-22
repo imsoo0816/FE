@@ -3,7 +3,7 @@ import { saveAuthData } from "./ApiClient";
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL?.replace(/\/+$/, "");
 
 if (!API_BASE_URL) {
-  throw new Error("REACT_APP_API_BASE_URL 환경변수가 설정되지 않았습니다.");
+  throw new Error("REACT_APP_API_BASE_URL is not configured.");
 }
 
 const AUTH_MVP_URL = `${API_BASE_URL}/api/auth/mvp/`;
@@ -11,21 +11,26 @@ const AUTH_MVP_URL = `${API_BASE_URL}/api/auth/mvp/`;
 const parseErrorMessage = async (response) => {
   try {
     const errorData = await response.json();
+    const detail = errorData?.detail;
+
+    if (typeof detail === "string") {
+      return detail;
+    }
+
+    if (Array.isArray(detail)) {
+      return detail.join(" ");
+    }
+
     return (
       errorData?.message ||
-      errorData?.detail ||
       errorData?.error ||
-      "로그인 중 문제가 발생했습니다."
+      "로그인 처리 중 문제가 발생했습니다."
     );
   } catch {
-    return "로그인 중 문제가 발생했습니다.";
+    return "로그인 처리 중 문제가 발생했습니다.";
   }
 };
 
-/**
- * MVP 로그인/회원가입
- * POST https://api.gamemate.kr/api/auth/mvp/
- */
 export const mvpLogin = async (nickname, password) => {
   const trimmedNickname = nickname.trim();
 

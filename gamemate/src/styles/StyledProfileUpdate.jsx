@@ -62,19 +62,24 @@ export const Body = styled.div`
   gap: 20px;
 `;
 
-export const Img = styled.div`
+export const ImgButton = styled.button`
   position: relative;
-  width: 58px;
-  height: 58px;
-  background: #ffe49a;
+  width: 86px;
+  height: 86px;
+  background: none;
+  border: 1px solid #fddf8d;
   border-radius: 50%;
   align-items: center;
   display: flex;
   justify-content: center;
+  padding: 0;
+  cursor: pointer;
 
   img#person {
-    width: 29.305px;
-    height: 29.305px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
@@ -82,8 +87,8 @@ export const EditIcon = styled.img`
   position: absolute;
   right: -1px;
   bottom: -1px;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
 `;
 
 export const TitleInput = styled.div`
@@ -124,19 +129,65 @@ export const TitleInput = styled.div`
   input:focus {
     border-color: #ffe49a;
   }
+
+  input:disabled {
+    background: #f8f8f8;
+    color: #697077;
+  }
 `;
 
-export const DuplicateText = styled.span`
+export const WarningText = styled.span`
   position: absolute;
   right: 0;
   bottom: 0;
-  color: #a2a2a2;
+  color: #d93025;
   font-family: Pretendard;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  letter-spacing: -0.24px;
+  letter-spacing: 0;
+`;
+
+export const AvatarPanel = styled.div`
+  width: 343px;
+  padding: 14px;
+  border: 1px solid #ffe49a;
+  border-radius: 10px;
+  background: #fffcf4;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  box-sizing: border-box;
+`;
+
+export const AvatarOption = styled.button`
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid ${({ $selected }) => ($selected ? "#f4c430" : "#ffffff")};
+  background: ${({ $selected }) => ($selected ? "#fff0c7" : "#ffffff")};
+  padding: 2px;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+`;
+
+export const Message = styled.p`
+  width: 343px;
+  margin: 0;
+  color: #d93025;
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
 `;
 
 export const Button = styled.button`
@@ -157,5 +208,10 @@ export const Button = styled.button`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  letter-spacing: -0.34px;
+  letter-spacing: 0;
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
 `;

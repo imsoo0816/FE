@@ -4,6 +4,7 @@ import { getMyRooms } from "../api/ProfApi";
 import { deleteRoom, leaveRoom } from "../api/RoomApi";
 import Navbar from "../components/Navbar";
 import * as P from "../styles/StyledProf";
+import { getProfileAvatarSrc } from "../utils/profileAvatar";
 
 const getStoredUser = () => {
   try {
@@ -172,7 +173,7 @@ const Prof = () => {
           <P.Img onClick={goProfileUpdate}>
             <img
               id="person"
-              src={`${process.env.PUBLIC_URL}/images/person.svg`}
+              src={getProfileAvatarSrc(user?.profile_avatar)}
               alt="person"
             />
             <P.EditIcon

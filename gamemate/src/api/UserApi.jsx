@@ -51,3 +51,24 @@ export const getMyInfo = async () => {
 
   return response.json();
 };
+
+export const updateMyInfo = async ({ profileAvatar } = {}) => {
+  const response = await authFetch(`${AUTH_URL}me/`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      profile_avatar: profileAvatar,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      await parseErrorMessage(response, "프로필을 수정하는 데 실패했습니다."),
+    );
+  }
+
+  return response.json();
+};
