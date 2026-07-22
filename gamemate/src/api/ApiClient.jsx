@@ -108,18 +108,12 @@ export const authFetch = async (url, options = {}, { requireAuth = true } = {}) 
     return response;
   }
 
-  if (!requireAuth && !getRefreshToken()) {
-    return fetch(url, options);
-  }
-
-  if (requireAuth || getRefreshToken()) {
-    try {
-      const refreshedAccessToken = await refreshAccessToken();
-      response = await fetch(url, withAuthHeader(options, refreshedAccessToken));
-    } catch (error) {
-      clearAuthData();
-      throw error;
-    }
+ try {
+    const refreshedAccessToken = await refreshAccessToken();
+    response = await fetch(url, withAuthHeader(options, refreshedAccessToken));
+  } catch (error) {
+    clearAuthData();
+    throw error;
   }
 
   return response;
